@@ -8,6 +8,7 @@ require_once(__DIR__ . "/app/utils/Router.php");
  * Application routes
  */
 Router::routeAdd('/', PageController::class, 'index');
+Router::routeAdd('/signup', PageController::class, 'signup');
 Router::routeAdd('/api', PageController::class, 'api');
 
 // ----------------------

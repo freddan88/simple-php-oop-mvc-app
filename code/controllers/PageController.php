@@ -15,10 +15,16 @@ class PageController {
         Response::render('index', $viewData);
     }
 
+    public static function signup()
+    {
+        Response::render('signup');
+    }
+
     public static function api()
     {
         $jsonData = [
             'Test' => 'Hello',
+            'method' => $_SERVER['REQUEST_METHOD'],
         ];
         Response::json($jsonData);
     }

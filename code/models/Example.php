@@ -8,6 +8,6 @@ class Example extends Database {
 
     public function __construct()
     {
-        var_dump($this);
+        var_dump($this->getHandler());
     }
 }

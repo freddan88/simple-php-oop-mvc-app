@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 class Router {
-    static $routes = [
+    static $postRoutes = [];
+    static $getRoutes = [
         'default' => [
             'controllerMethod' => 'default',
             'controllerName' => PageController::class,
@@ -12,17 +13,30 @@ class Router {
 
     private static function getControllerInfo($path)
     {
-        $controllerInfo = self::$routes[$path];
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                $controllerInfo = self::$getRoutes[$path];
+                break;
+            case 'POST':
+                $controllerInfo = self::$postRoutes[$path];
+                break;
+        }
 
-        if (!$controllerInfo) return self::$routes['default'];
+        if (!$controllerInfo) return self::$getRoutes['default'];
 
         return $controllerInfo;
     }
 
-    public static function routeAdd($path, $controller, $method)
+    public static function getRoute($path, $controller, $method)
     {
-        self::$routes[$path]['controllerMethod'] = $method;
-        self::$routes[$path]['controllerName'] = $controller;
+        self::$getRoutes[$path]['controllerMethod'] = $method;
+        self::$getRoutes[$path]['controllerName'] = $controller;
+    }
+
+    public static function postRoute($path, $controller, $method)
+    {
+        self::$postRoutes[$path]['controllerMethod'] = $method;
+        self::$postRoutes[$path]['controllerName'] = $controller;
     }
 
     public static function loadController()

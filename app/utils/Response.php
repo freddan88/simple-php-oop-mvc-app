@@ -18,4 +18,9 @@ class Response {
         echo json_encode($Data);
         exit;
     }
+
+    public static function redirect($path)
+    {
+        header("Location: $path");
+    }
 }

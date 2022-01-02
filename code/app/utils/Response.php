@@ -10,7 +10,7 @@ class Response {
             $viewData = ['pageTitle' => 'Document'];
         }
         $viewData;
-        require_once(__DIR__ . "../../views/$viewName.view.php");
+        require_once(__DIR__ . "../../../views/$viewName.view.php");
     }
 
     public static function json($Data)

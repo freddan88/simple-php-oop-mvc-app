@@ -34,7 +34,7 @@ class Router {
         $controllerName = $controllerInfo['controllerName'];
         $controllerMethod = $controllerInfo['controllerMethod'];
 
-        require_once(__DIR__ . "../../controllers/$controllerName.php");
+        require_once(__DIR__ . "../../../controllers/$controllerName.php");
 
         $controllerName::$controllerMethod();
     }

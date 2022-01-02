@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . "/utils/Router.php");
+require_once(__DIR__ . "/app/utils/Router.php");
 
 /**
  * Application routes

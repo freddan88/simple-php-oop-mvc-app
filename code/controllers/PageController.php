@@ -15,11 +15,6 @@ class PageController {
         Response::render('index', $viewData);
     }
 
-    public static function signup()
-    {
-        Response::render('signup');
-    }
-
     public static function api()
     {
         $jsonData = [
@@ -27,10 +22,5 @@ class PageController {
             'method' => $_SERVER['REQUEST_METHOD'],
         ];
         Response::json($jsonData);
-    }
-
-    public static function default()
-    {
-        echo '404 Not Found';
     }
 }

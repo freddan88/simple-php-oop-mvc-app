@@ -75,9 +75,9 @@ class Router {
         $controllerInfo = Self::getControllerInfo($path);
         $controllerName = $controllerInfo['controllerName'];
         $controllerMethod = $controllerInfo['controllerMethod'];
-
+        
         require_once(__DIR__ . "../../controllers/$controllerName.php");
-
+        
         if (!method_exists($controllerName, $controllerMethod)) {
             if (str_contains($path, 'api')) Response::json(['code' => 501, 'message' => 'Not Implemented']);
             Response::render('error', ['pageTitle' => '501']);

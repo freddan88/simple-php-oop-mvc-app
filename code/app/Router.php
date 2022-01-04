@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-class ApiRouter {
+require_once(__DIR__ . "/utils/Response.php");
+
+class Router {
 
     const GET = 'GET';
     const PUT = 'PUT';
@@ -33,7 +35,8 @@ class ApiRouter {
                 break;
         }
 
-        if (!$controllerInfo) return Self::$routesArray['default'];
+        if (str_contains($path, 'api') && !$controllerInfo) Response::json(['code' => 404, 'data' => $_SERVER]);
+        if (!$controllerInfo) Response::render('error', ['pageTitle' => '404']);
 
         return $controllerInfo;
     }
@@ -73,11 +76,11 @@ class ApiRouter {
         $controllerName = $controllerInfo['controllerName'];
         $controllerMethod = $controllerInfo['controllerMethod'];
 
-        require_once(__DIR__ . "../../../controllers/$controllerName.php");
+        require_once(__DIR__ . "../../controllers/$controllerName.php");
 
         if (!method_exists($controllerName, $controllerMethod)) {
-            // die(var_dump('Method not found'));
-            echo json_encode([]);
+            if (str_contains($path, 'api')) Response::json(['code' => 501, 'message' => 'Not Implemented']);
+            Response::render('error', ['pageTitle' => '501']);
             exit;
         }
 

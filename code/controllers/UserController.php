@@ -6,22 +6,19 @@ require_once(__DIR__ . "../../app/utils/Response.php");
 
 class UserController {
 
-    public static function index()
+    public static function login()
     {
-        $viewData = [
-            'pageTitle' => 'Home',
-            'heading' => 'This is the homepage'
-        ];
-        Response::render('index', $viewData);
+        Response::redirect('/');
     }
 
     public static function signup()
     {
-        Response::render('signup');
+        Response::redirect('/');
     }
 
-    public static function signin()
+    public static function logout()
     {
-        Response::render('signup');
+        Response::redirect('/');
     }
+    
 }

@@ -11,12 +11,7 @@ class Router {
     const POST = 'POST';
     const DELETE = 'DELETE';
 
-    private static $routesArray = [
-        'default' => [
-            'controllerName' => NotFoundController::class,
-            'controllerMethod' => 'jsonResponse',
-        ]
-    ];
+    private static $routesArray = [];
 
     private static function getControllerInfo($path)
     {
@@ -35,8 +30,8 @@ class Router {
                 break;
         }
 
-        if (str_contains($path, 'api') && !$controllerInfo) Response::json(['code' => 404, 'data' => $_SERVER]);
-        if (!$controllerInfo) Response::render('error', ['pageTitle' => '404']);
+        if (str_contains($path, 'api') && !$controllerInfo) Response::json(['code' => 404, 'message' => 'Not found']);
+        if (!$controllerInfo) Response::render('error', ['pageTitle' => '404', 'message' => 'Page not found']);
 
         return $controllerInfo;
     }
@@ -80,8 +75,7 @@ class Router {
         
         if (!method_exists($controllerName, $controllerMethod)) {
             if (str_contains($path, 'api')) Response::json(['code' => 501, 'message' => 'Not Implemented']);
-            Response::render('error', ['pageTitle' => '501']);
-            exit;
+            Response::render('error', ['pageTitle' => '501', 'message' => 'Not Implemented']);
         }
 
         $controllerName::$controllerMethod();

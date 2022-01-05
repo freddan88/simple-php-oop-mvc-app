@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 class Response {
 
-    public static function render($viewName, $viewData = null)
+    public static function render($viewName, $viewData = null, $viewPath = '')
     {
-        if (!$viewData) {
-            $viewData = ['pageTitle' => 'Document'];
-        }
-        $viewData;
-        require_once(__DIR__ . "../../../views/$viewName.view.php");
+        $viewPath = $viewPath ? 'views/' . trim($viewPath,'/') : 'views';
+        $viewData = $viewData ? $viewData : ['pageTitle' => 'Document'];
+        $viewData = (object) $viewData;
+        require_once(__DIR__ . "../../../$viewPath/$viewName.view.php");
+        exit;
     }
 
     public static function json($Data)
@@ -22,5 +22,6 @@ class Response {
     public static function redirect($path)
     {
         header("Location: $path");
+        exit;
     }
 }

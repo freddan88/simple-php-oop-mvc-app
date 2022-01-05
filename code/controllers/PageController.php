@@ -10,17 +10,27 @@ class PageController {
     {
         $viewData = [
             'pageTitle' => 'Home',
-            'heading' => 'This is the homepage'
+            'heading' => 'This is the home-page'
         ];
-        Response::render('index', $viewData);
+        Response::render('home', $viewData);
     }
 
-    public static function api()
-    {
-        $jsonData = [
-            'Test' => 'Hello',
-            'method' => $_SERVER['REQUEST_METHOD'],
+    public static function login()
+    {        
+        $viewData = [
+            'pageTitle' => 'Login',
+            'heading' => 'This is the login-page'
         ];
-        Response::json($jsonData);
+        Response::render('login', $viewData);
     }
+
+    public static function signup()
+    {        
+        $viewData = [
+            'pageTitle' => 'Signup',
+            'heading' => 'This is the signup-page'
+        ];
+        Response::render('signup', $viewData);
+    }
+    
 }

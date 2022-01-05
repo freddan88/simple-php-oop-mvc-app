@@ -32,5 +32,4 @@ class PageController {
         ];
         Response::render('signup', $viewData);
     }
-    
 }

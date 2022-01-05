@@ -13,6 +13,5 @@ class ApiController {
             'method' => $_SERVER['REQUEST_METHOD'],
         ];
         Response::json($jsonData);
-    }
-
+    } 
 }

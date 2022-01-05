@@ -20,5 +20,4 @@ class UserController {
     {
         Response::redirect('/');
     }
-    
 }

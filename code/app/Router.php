@@ -7,9 +7,7 @@ require_once(__DIR__ . "/utils/Response.php");
 class Router {
 
     const GET = 'GET';
-    const PUT = 'PUT';
     const POST = 'POST';
-    const DELETE = 'DELETE';
 
     private static $routesArray = [];
 
@@ -19,14 +17,8 @@ class Router {
             case self::GET:
                 $controllerInfo = Self::$routesArray[self::GET][$urlPath];
                 break;
-            case self::PUT:
-                $controllerInfo = Self::$routesArray[self::PUT][$urlPath];
-                break;
             case self::POST:
                 $controllerInfo = Self::$routesArray[self::POST][$urlPath];
-                break;
-            case self::DELETE:
-                $controllerInfo = Self::$routesArray[self::DELETE][$urlPath];
                 break;
         }
 
@@ -48,19 +40,9 @@ class Router {
         Self::addRoute(self::GET, $urlPath, $controller, $controllerMethod, $controllerPath);
     }
 
-    public static function putRoute($urlPath, $controller, $controllerMethod, $controllerPath = null)
-    {
-        Self::addRoute(self::PUT, $urlPath, $controller, $controllerMethod, $controllerPath);
-    }
-
     public static function postRoute($urlPath, $controller, $controllerMethod, $controllerPath = null)
     {
         Self::addRoute(self::POST, $urlPath, $controller, $controllerMethod, $controllerPath);
-    }
-
-    public static function deleteRoute($urlPath, $controller, $controllerMethod, $controllerPath = null)
-    {
-        Self::addRoute(self::DELETE, $urlPath, $controller, $controllerMethod, $controllerPath);
     }
 
     public static function loadController()

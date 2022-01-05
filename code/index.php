@@ -18,10 +18,10 @@ Router::postRoute('/logout', UserController::class, 'logout');
 Router::getRoute('/api', ApiController::class, 'index');
 
 /**
- * Supported http-methods:
- * GET (getRoute)
- * PUT (putRoute)
- * POST (postRoute)
- * DELETE (deleteRoute)
+ * Supported http-methods and examples:
+ * GET - Usage: getRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
+ * PUT - Usage: putRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
+ * POST - Usage: postRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
+ * DELETE - Usage: deleteRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
  */
 Router::loadController();

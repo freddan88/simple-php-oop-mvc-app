@@ -4,24 +4,44 @@ declare(strict_types=1);
 
 class Response {
 
-    public static function render($viewName, $viewData = null, $viewPath = '')
+    /**
+     * Usage: Response::render('viewName', [viewData] Optional, 'viewPath' Optional - Root = /views)
+     * 
+     * @param string $viewName
+     * @param array $viewData
+     * @param string $viewPath
+     * @return void
+     */
+    public static function render($viewName, $viewData = [], $viewPath = '')
     {
         $viewPath = $viewPath ? 'views/' . trim($viewPath,'/') : 'views';
-        $viewData = $viewData ? $viewData : ['pageTitle' => 'Document'];
+        $viewData = empty($viewData) ? ['pageTitle' => 'Document'] : $viewData;
         $viewData = (object) $viewData;
         require_once(__DIR__ . "../../../$viewPath/$viewName.view.php");
         exit;
     }
 
-    public static function json($Data)
+    /**
+     * Usage: Response::json([data])
+     *
+     * @param array $apiData
+     * @return void
+     */
+    public static function json($apiData)
     {
-        echo json_encode($Data);
+        echo json_encode($apiData);
         exit;
     }
 
-    public static function redirect($path)
+    /**
+     * Usage: Response::json('urlPath')
+     *
+     * @param string $urlPath
+     * @return void
+     */
+    public static function redirect($urlPath)
     {
-        header("Location: $path");
+        header("Location: $urlPath");
         exit;
     }
 }

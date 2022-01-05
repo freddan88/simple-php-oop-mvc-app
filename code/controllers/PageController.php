@@ -10,7 +10,7 @@ class PageController {
     {
         $viewData = [
             'pageTitle' => 'Home',
-            'heading' => 'This is the home-page'
+            'heading' => 'This is the home-page',
         ];
         Response::render('home', $viewData);
     }
@@ -19,7 +19,8 @@ class PageController {
     {        
         $viewData = [
             'pageTitle' => 'Login',
-            'heading' => 'This is the login-page'
+            'heading' => 'This is the login-page',
+            'message' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
         Response::render('login', $viewData);
     }

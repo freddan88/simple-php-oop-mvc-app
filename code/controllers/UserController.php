@@ -8,7 +8,9 @@ class UserController {
 
     public static function login()
     {
-        Response::redirect('/');
+        if (empty($_POST['username'])) Response::redirect('/login');
+        $message = urlencode('User successfully created');
+        Response::redirect("/login?message=$message");
     }
 
     public static function signup()

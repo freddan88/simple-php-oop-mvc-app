@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.login-form {
+  max-width: 300px;
+  margin: 0 10px;
+}
+
+.login-form button {
+  cursor: pointer;
+  display: block;
+  float: right;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group > label {
+  align-self: flex-start;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.form-group > input {
+  margin-top: 4px;
+  padding: 2px;
+}

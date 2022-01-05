@@ -67,6 +67,7 @@ class Router {
     {
         $uri = $_SERVER['REQUEST_URI'];
         $urlPath = parse_url($uri, PHP_URL_PATH);
+        $urlPath = '/' . trim($urlPath,'/');
 
         $controllerInfo = Self::getControllerInfo($urlPath);
         $controllerName = $controllerInfo['controllerName'];
@@ -83,5 +84,4 @@ class Router {
 
         $controllerName::$controllerMethod();
     }
-
 }

@@ -11,12 +11,15 @@ class Response {
      * @param string $viewName
      * @param array $viewData
      * @param string $viewPath
+     * @param boolean $useMainJavascript
+     * @param boolean $useMainStylesheet
      * @return void
      */
-    public static function render($viewName, $viewData = [], $viewPath = '')
+    public static function render($viewName, $viewData = [], $viewPath = '', $useMainJavascript = true, $useMainStylesheet = true)
     {
         $viewPath = $viewPath ? 'views/' . trim($viewPath,'/') : 'views';
-        $viewData = empty($viewData) ? ['pageTitle' => 'Document'] : $viewData;
+        $viewData['useMainJavascript'] = $useMainJavascript;
+        $viewData['useMainStylesheet'] = $useMainStylesheet;
         $viewData = (object) $viewData;
         require_once(__DIR__ . "../../../$viewPath/$viewName.view.php");
         exit;

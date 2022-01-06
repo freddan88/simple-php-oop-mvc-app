@@ -9,8 +9,13 @@ class PageController {
     public static function index()
     {
         $viewData = [
-            'pageTitle' => 'Home',
-            'heading' => 'This is the home-page',
+            'metaTitle' => 'Fredrik | Home',
+            'metaDescription' => 'This is the home-page',
+            'metaKeywords' => 'Home, Page',
+            'metaAuthor' => 'Fredrik Leemann',
+            'pageJavascriptFileNames' => ['home'],
+            'pageStyleSheetFileNames' => ['home'],
+            'pageHeading' => 'This is the home-page',
         ];
         Response::render('home', $viewData);
     }
@@ -18,7 +23,10 @@ class PageController {
     public static function login()
     {        
         $viewData = [
-            'pageTitle' => 'Login',
+            'metaTitle' => 'Fredrik | Login',
+            'metaDescription' => 'This is the login-page',
+            'metaKeywords' => 'Login, Page',
+            'metaAuthor' => 'Fredrik Leemann',
             'heading' => 'This is the login-page',
             'message' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
@@ -28,7 +36,10 @@ class PageController {
     public static function signup()
     {        
         $viewData = [
-            'pageTitle' => 'Signup',
+            'metaTitle' => 'Fredrik | Signup',
+            'metaDescription' => 'This is the signup-page',
+            'metaKeywords' => 'Signup, Page',
+            'metaAuthor' => 'Fredrik Leemann',
             'heading' => 'This is the signup-page'
         ];
         Response::render('signup', $viewData);

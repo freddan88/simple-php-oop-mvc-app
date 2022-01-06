@@ -16,5 +16,8 @@ indent_size = 2
 indent_size = 4
 
 # 2 space override
-[*.view.php, *.part.php]
+[*.view.php]
+indent_size = 2
+
+[*.part.php]
 indent_size = 2

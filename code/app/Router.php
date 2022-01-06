@@ -55,7 +55,7 @@ class Router {
         $controllerName = $controllerInfo['controllerName'];
         $controllerPath = $controllerInfo['controllerPath'];
         $controllerMethod = $controllerInfo['controllerMethod'];
-
+        
         $controllerPath = $controllerPath ? 'controllers/' . trim($controllerPath,'/') : 'controllers';
         require_once(__DIR__ . "../../$controllerPath/$controllerName.php");
         

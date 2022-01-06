@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  margin: 0 10px;
+  max-width: 300px;
+  flex-direction: column;
+}
+
+.form__group {
+  margin: 4px 0 40px 0;
+}
+
+.form__group > label {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.form__group > input {
+  padding: 2px;
+  width: 100%;
+}
+
+.form > button {
+  align-self: flex-end;
+  cursor: pointer;
+}

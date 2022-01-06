@@ -28,6 +28,7 @@ class PageController {
             'metaKeywords' => 'Login, Page',
             'metaAuthor' => 'Fredrik Leemann',
             'heading' => 'This is the login-page',
+            'pageStyleSheetFileNames' => ['login'],
             'message' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
         Response::render('login', $viewData);
@@ -40,7 +41,8 @@ class PageController {
             'metaDescription' => 'This is the signup-page',
             'metaKeywords' => 'Signup, Page',
             'metaAuthor' => 'Fredrik Leemann',
-            'heading' => 'This is the signup-page'
+            'heading' => 'This is the signup-page',
+            'pageStyleSheetFileNames' => ['signup'],
         ];
         Response::render('signup', $viewData);
     }

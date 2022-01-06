@@ -31,6 +31,7 @@ class PageController {
             'pageStyleSheetFileNames' => ['login'],
             'message' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
+        // $_SESSION['isLogedin'] = true;
         Response::render('login', $viewData);
     }
 
@@ -44,6 +45,7 @@ class PageController {
             'heading' => 'This is the signup-page',
             'pageStyleSheetFileNames' => ['signup'],
         ];
+        //session_destroy();
         Response::render('signup', $viewData);
     }
 }

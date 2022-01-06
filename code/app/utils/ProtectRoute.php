@@ -12,7 +12,8 @@ class ProtectRoute {
         $urlPath = parse_url($uri, PHP_URL_PATH);
         $urlPath = '/' . trim($urlPath,'/');
         if ($urlPath !== $path) return true;
-        Response::redirect('/'); 
+        if (isset($_SESSION['isLogedin']) && $_SESSION['isLogedin']) return true;
+        return false;
     }
 
     public static function bearer()

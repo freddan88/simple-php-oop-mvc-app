@@ -14,10 +14,4 @@ class ApiController {
         ];
         Response::json($jsonData);
     } 
-
-    public static function put()
-    {
-        parse_str(file_get_contents('php://input'), $_PUT);
-        Response::json($_PUT);
-    } 
 }

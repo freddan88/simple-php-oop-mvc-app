@@ -6,6 +6,7 @@ class Response {
 
     /**
      * Usage: Response::render('viewName', [viewData] Optional, 'viewPath' Optional - Root = /views)
+     * OBS: ViewData will be transformed to an object and passed to selected view [stdClass]
      * 
      * @param string $viewName
      * @param array $viewData

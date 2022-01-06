@@ -11,7 +11,7 @@ Router::getRoute('/signup', PageController::class, 'signup');
 
 // (www) post-routes
 Router::postRoute('/login', UserController::class, 'login');
-Router::postRoute('/logout', UserController::class, 'signup');
+Router::postRoute('/signup', UserController::class, 'signup');
 Router::postRoute('/logout', UserController::class, 'logout');
 
 // (api) get-routes

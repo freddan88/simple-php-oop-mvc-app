@@ -22,6 +22,11 @@ class Authenticator {
         return $this;
     }
 
+    public function getAuthenticatedRoutes()
+    {
+        die(var_dump($this->authenticatedRoutes));
+    }
+
     public function validateLogin()
     {
         $urlPath = $this->getRoute();

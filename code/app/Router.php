@@ -46,7 +46,7 @@ class Router {
     }
 
     public static function loadController()
-    {
+    {        
         $uri = $_SERVER['REQUEST_URI'];
         $urlPath = parse_url($uri, PHP_URL_PATH);
         $urlPath = '/' . trim($urlPath,'/');

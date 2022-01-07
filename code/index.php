@@ -30,17 +30,17 @@ Router::getRoute('/api/hej', ApiController::class, 'hello');
  * POST - Usage: postRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
  */
 
-$authorize = new Authorize();
+// $authorize = new Authorize();
 
-$authorize->setRoute('/dashboard', ['admin','user']);
-$authorize->setRoute('/api', ['admin'])->validateAuthorization();
+// $authorize->setRoute('/dashboard', ['admin','user']);
+// $authorize->setRoute('/api', ['admin'])->validateAuthorization();
 
 $authenticator = new Authenticator();
 
 $wwwRoutes = ['/dashboard'];
 $authenticator->setRoutes($wwwRoutes)->validateLogin();
 
-$apiRoutes = ['/api'];
+$apiRoutes = ['/api/hej'];
 $authenticator->setRoutes($apiRoutes)->validateApiKey();
 
 Router::loadController();

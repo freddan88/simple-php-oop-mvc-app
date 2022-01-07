@@ -3,19 +3,13 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . "/../utils/Response.php");
+require_once(__DIR__ . "/../utils/Route.php");
 
 class Authenticator {
+    use Route;
 
     private $authenticatedRoutes = [];
-
-    private function getRoute()
-    {
-        $uri = $_SERVER['REQUEST_URI'];
-        $urlPath = parse_url($uri, PHP_URL_PATH);
-        $urlPath = '/' . trim($urlPath,'/');
-        return $urlPath;
-    }
-
+    
     public function setRoutes(array $authenticatedRoutes = [])
     {
         $this->authenticatedRoutes = $authenticatedRoutes;
@@ -29,7 +23,7 @@ class Authenticator {
 
     public function validateLogin()
     {
-        $urlPath = $this->getRoute();
+        $urlPath = $this->getCurrentRoute();
         $routes = $this->authenticatedRoutes;
         if (in_array($urlPath, $routes)) {
             $viewData = ['code' => '401', 'message' => 'You are not authenticated'];
@@ -39,7 +33,7 @@ class Authenticator {
 
     public function validateApiKey()
     {
-        $urlPath = $this->getRoute();
+        $urlPath = $this->getCurrentRoute();
         $routes = $this->authenticatedRoutes;
         if (in_array($urlPath, $routes)) {
             $apiData = ['code' => '401', 'message' => 'You are not authenticated'];

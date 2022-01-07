@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-class Authorize {
-    private $authorizedRoutes = [];
+require_once(__DIR__ . "/../utils/Response.php");
+require_once(__DIR__ . "/../utils/Route.php");
 
-    private function getRoute()
-    {
-        $uri = $_SERVER['REQUEST_URI'];
-        $urlPath = parse_url($uri, PHP_URL_PATH);
-        $urlPath = '/' . trim($urlPath,'/');
-        return $urlPath;
-    }
+class Authorize {
+    use Route;
+
+    private $authorizedRoutes = [];
 
     public function setRoute($route, $roles)
     {
@@ -26,7 +23,7 @@ class Authorize {
 
     public function validateAuthorization()
     {
-        $urlPath = $this->getRoute();
+        $urlPath = $this->getCurrentRoute();
         $routes = $this->authorizedRoutes;
         if ($routes[$urlPath]) {
             $data = ['code' => '401', 'message' => 'You are not authorized to use this resource'];

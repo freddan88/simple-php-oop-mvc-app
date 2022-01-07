@@ -5,9 +5,8 @@ declare(strict_types=1);
 // session_start();
 
 require_once(__DIR__ . "/app/Router.php");
-require_once(__DIR__ . "/app/utils/ProtectRoute.php");
-require_once(__DIR__ . "/app/security/Authenticator.php");
 require_once(__DIR__ . "/app/security/Authorize.php");
+require_once(__DIR__ . "/app/security/Authenticator.php");
 
 // (www) get-routes
 // ProtectRoute::isLogedin('/') && 

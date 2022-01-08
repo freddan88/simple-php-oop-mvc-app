@@ -135,11 +135,13 @@ Trait Database {
 
     public function fetch($pdoFetchOption = PDO::FETCH_OBJ)
     {
+        $this->cleanup();
         return $this->statement->fetch($pdoFetchOption);
     }
 
     public function fetchAll($pdoFetchOption = PDO::FETCH_OBJ)
     {
+        $this->cleanup();
         return $this->statement->fetchAll($pdoFetchOption);
     }
 

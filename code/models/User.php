@@ -18,12 +18,12 @@ class User extends Sanitize {
         // ->bind($fields[1],'roger@test.se', PDO::PARAM_STR)
         // ->bind($fields[2],'123', PDO::PARAM_STR)
         // ->bind($fields[3], 2, PDO::PARAM_INT)
-        // ->execute();
+        // ->execute()->cleanup();
 
         // $updateSql = $this->table($table)->update(['name'])->append('WHERE id = 1');
         // $this->sqlite()->prepare($updateSql)
         // ->bind($fields[0],'Freddan', PDO::PARAM_STR)
-        // ->execute();
+        // ->execute()->cleanup();
 
         // $selectAllSql = $this->table($table)->getAll()->append();
         // $selectAllData = $this->sqlite()->prepare($selectAllSql)->execute()->fetchAll();
@@ -31,8 +31,8 @@ class User extends Sanitize {
         // $selectSql = $this->table($table)->get(['name'])->append('WHERE id = 2');
         // $selectData = $this->sqlite()->prepare($selectSql)->execute()->fetch();
 
-        $deleteSql = $this->table($table)->delete()->append('WHERE id = 2');
-        $this->sqlite()->prepare($deleteSql)->execute()->cleanup();
+        // $deleteSql = $this->table($table)->delete()->append('WHERE id = 2');
+        // $this->sqlite()->prepare($deleteSql)->execute()->cleanup();
 
         // $this->sqlite()->insert()->table('tbl_users')->fields($fields)->debugSql();
         // $value = $this->sqlite()->get($fields)->table('tbl_users')->prepare()->execute()->fetchAll();

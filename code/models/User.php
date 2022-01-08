@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . "../../app/utils/Database.php");
+require_once(__DIR__ . "../../app/database/Database.php");
 
-class USER extends Database {
+class User {
+    use Database;
 
     public function __construct()
     {
-        var_dump($this->getHandler());
+        $this->sqlite();
     }
 }

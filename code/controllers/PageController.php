@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . "../../app/utils/Response.php");
+require_once(__DIR__ . "../../models/User.php");
 
 class PageController {
 
@@ -17,6 +18,7 @@ class PageController {
             'pageStyleSheetFileNames' => ['home'],
             'pageHeading' => 'This is the home-page',
         ];
+        $user = new User();
         Response::render('home', $viewData);
     }
 

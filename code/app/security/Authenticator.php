@@ -24,10 +24,12 @@ class Authenticator {
         return $this;
     }
 
-    public function getRoutes()
+    public function debugRoutes()
     {
-        var_dump($this->authenticatedRoutes);
-        exit;
+        if ($this->urlExists()) {
+            echo "<pre>", var_dump($this->authenticatedRoutes), "</pre>";
+            exit;
+        }
     }
 
     public function validateLogin()

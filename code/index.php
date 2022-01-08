@@ -38,7 +38,7 @@ Router::getRoute('/api/hej', ApiController::class, 'hello');
 $authenticate = new Authenticator();
 
 $wwwRoutes = ['/dashboard'];
-$authenticate->routes($wwwRoutes)->validateLogin();
+$authenticate->routes($wwwRoutes)->debugRoutes();
 
 $apiRoutes = ['/api/hej'];
 $authenticate->routes($apiRoutes)->validateApiKey();

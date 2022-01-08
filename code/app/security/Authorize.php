@@ -32,10 +32,12 @@ class Authorize {
         return $this;
     }
 
-    public function getRoutes()
+    public function debugRoutes()
     {
-        var_dump($this->authorizedRoutes);
-        exit;
+        if ($this->urlExists()) {
+            echo "<pre>", var_dump($this->authorizedRoutes), "</pre>";
+            exit;
+        }
     }
 
     public function validate()

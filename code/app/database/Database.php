@@ -146,5 +146,9 @@ Trait Database {
     public function cleanup()
     {
         $this->statement = null;
+        $this->fields = [];
+        $this->action = '';
+        $this->table = '';
+        $this->sql = '';
     }
 }

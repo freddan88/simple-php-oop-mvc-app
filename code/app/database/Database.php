@@ -51,12 +51,6 @@ Trait Database {
         }
     }
 
-    public function sql($sql)
-    {
-        $this->sql = "$sql;";
-        return $this;
-    }
-
     public function table($tableName)
     {
         $this->table = $tableName;

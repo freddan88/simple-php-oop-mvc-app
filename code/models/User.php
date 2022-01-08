@@ -28,10 +28,11 @@ class User extends Sanitize {
         // $selectAllSql = $this->table($table)->getAll()->append();
         // $selectAllData = $this->sqlite()->prepare($selectAllSql)->execute()->fetchAll();
 
-        $selectSql = $this->table($table)->get(['name'])->append('WHERE id = 2');
-        $selectData = $this->sqlite()->prepare($selectSql)->execute()->fetch();
+        // $selectSql = $this->table($table)->get(['name'])->append('WHERE id = 2');
+        // $selectData = $this->sqlite()->prepare($selectSql)->execute()->fetch();
 
-        die(var_dump($selectData));
+        // $deleteSql = $this->table($table)->delete()->append('WHERE id = 2');
+        // $this->sqlite()->prepare($deleteSql)->execute();
 
         // $this->sqlite()->insert()->table('tbl_users')->fields($fields)->debugSql();
         // $value = $this->sqlite()->get($fields)->table('tbl_users')->prepare()->execute()->fetchAll();

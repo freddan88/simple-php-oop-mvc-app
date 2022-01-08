@@ -51,6 +51,12 @@ Trait Database {
         }
     }
 
+    public function sql($sql)
+    {
+        $this->sql = "$sql;";
+        return $this;
+    }
+
     public function table($tableName)
     {
         $this->table = $tableName;
@@ -60,7 +66,6 @@ Trait Database {
 
     public function get($fields)
     {
-        if (!$this->table) return false;
         $this->action = 'SELECT';
         $fieldList = $this->getFieldList($fields);
         $this->sql = "SELECT $fieldList FROM $this->table";
@@ -69,14 +74,12 @@ Trait Database {
 
     public function getAll()
     {
-        if (!$this->table) return false;
         $this->sql = "SELECT * FROM $this->table";
         return $this;
     }
 
     public function insert($fields)
     {
-        if (!$this->table) return false;
         $this->action = 'INSERT';
         $fieldList = $this->getFieldList($fields)['fields'];
         $valueList = $this->getFieldList($fields)['values'];
@@ -86,10 +89,15 @@ Trait Database {
 
     public function update($fields)
     {
-        if (!$this->table) return false;
         $this->action = 'UPDATE';
         $fieldList = $this->getFieldList($fields);
         $this->sql = "UPDATE $this->table SET $fieldList";
+        return $this;
+    }
+
+    public function delete()
+    {
+        $this->sql = "DELETE FROM $this->table";
         return $this;
     }
 

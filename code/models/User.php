@@ -12,6 +12,7 @@ class User extends Sanitize {
     {
         $table = 'tbl_users';
         $fields = ['name', 'email', 'password', 'role'];
+        $this->sqlite(null, []);
         // $insertSql = $this->table($table)->insert($fields)->append();
         // $this->sqlite()->prepare($insertSql)
         // ->bind($fields[0],'Roger', PDO::PARAM_STR)

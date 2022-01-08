@@ -102,10 +102,15 @@ Trait Database {
         return $this->sql;
     }
 
-    public function sqlite($databaseName = 'sqlite')
+    public function sqlite($databaseName = '', $pdoOptions = [])
     {
-        $databasePath = sprintf('sqlite:%s/database_%s.db', __DIR__, $databaseName);
-        $this->pdo = new PDO($databasePath);
+        $databaseName = empty($databaseName) ? 'sqlite' : $databaseName;
+        $dsn = sprintf('sqlite:%s/database_%s.db', __DIR__, $databaseName);
+        try {
+            $this->pdo = new PDO($dsn, null, null, $pdoOptions);
+        } catch (Exception $e) {
+            die(var_dump($e->getMessage()));
+        }
         return $this;
     }
 
@@ -136,5 +141,10 @@ Trait Database {
     public function fetchAll($pdoFetchOption = PDO::FETCH_OBJ)
     {
         return $this->statement->fetchAll($pdoFetchOption);
+    }
+
+    public function cleanup()
+    {
+        $this->statement = null;
     }
 }

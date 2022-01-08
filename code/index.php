@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-// session_start();
-
 require_once(__DIR__ . "/app/Router.php");
 require_once(__DIR__ . "/app/security/Authorize.php");
 require_once(__DIR__ . "/app/security/Authenticator.php");
 
 // (www) get-routes
-// ProtectRoute::isLogedin('/') && 
 Router::getRoute('/', PageController::class, 'index');
 Router::getRoute('/login', PageController::class, 'login');
 Router::getRoute('/signup', PageController::class, 'signup');
@@ -30,17 +27,19 @@ Router::getRoute('/api/hej', ApiController::class, 'hello');
  * POST - Usage: postRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
  */
 
+// session_start();
+
 // $authorize = new Authorize();
 
-// $authorize->setRoute('/dashboard', ['admin','user']);
-// $authorize->setRoute('/api', ['admin'])->validateAuthorization();
+// $authorize->route('/dashboard')->roles(['admin','user'])->validate();
+// $authorize->route('/api')->roles(['admin','user'])->validate();
 
-$authenticator = new Authenticator();
+$authenticate = new Authenticator();
 
 $wwwRoutes = ['/dashboard'];
-$authenticator->setRoutes($wwwRoutes)->validateLogin();
+$authenticate->routes($wwwRoutes)->validateLogin();
 
 $apiRoutes = ['/api/hej'];
-$authenticator->setRoutes($apiRoutes)->validateApiKey();
+$authenticate->routes($apiRoutes)->validateApiKey();
 
 Router::loadController();

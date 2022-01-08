@@ -9,23 +9,30 @@ class Authenticator {
     use Route;
 
     private $authenticatedRoutes = [];
+
+    private function urlExists()
+    {
+        $urlPath = $this->getCurrentRoute();
+        $routes = $this->authenticatedRoutes;
+        if (in_array($urlPath, $routes)) return true;
+        return false;
+    }
     
-    public function setRoutes(array $authenticatedRoutes = [])
+    public function routes(array $authenticatedRoutes = [])
     {
         $this->authenticatedRoutes = $authenticatedRoutes;
         return $this;
     }
 
-    public function getAuthenticatedRoutes()
+    public function getRoutes()
     {
-        die(var_dump($this->authenticatedRoutes));
+        var_dump($this->authenticatedRoutes);
+        exit;
     }
 
     public function validateLogin()
     {
-        $urlPath = $this->getCurrentRoute();
-        $routes = $this->authenticatedRoutes;
-        if (in_array($urlPath, $routes)) {
+        if ($this->urlExists()) {
             $viewData = ['code' => '401', 'message' => 'You are not authenticated'];
             Response::render('error', $viewData);
         }
@@ -33,9 +40,7 @@ class Authenticator {
 
     public function validateApiKey()
     {
-        $urlPath = $this->getCurrentRoute();
-        $routes = $this->authenticatedRoutes;
-        if (in_array($urlPath, $routes)) {
+        if ($this->urlExists()) {
             $apiData = ['code' => '401', 'message' => 'You are not authenticated'];
             Response::json($apiData);
         }

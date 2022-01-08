@@ -23,7 +23,7 @@ class Router {
         }
 
         if (str_contains($urlPath, 'api') && !$controllerInfo) Response::json(['code' => 404, 'message' => 'Not found']);
-        if (!$controllerInfo) Response::render('error', ['pageTitle' => '404', 'message' => 'Page not found']);
+        if (!$controllerInfo) Response::render('error', ['pageTitle' => '404', 'pageMessage' => 'Page not found']);
 
         return $controllerInfo;
     }
@@ -61,7 +61,7 @@ class Router {
         
         if (!method_exists($controllerName, $controllerMethod)) {
             if (str_contains($urlPath, 'api')) Response::json(['code' => 501, 'message' => 'Not Implemented']);
-            Response::render('error', ['pageTitle' => '501', 'message' => 'Not Implemented']);
+            Response::render('error', ['pageTitle' => '501', 'pageMessage' => 'Not Implemented']);
         }
 
         $controllerName::$controllerMethod();

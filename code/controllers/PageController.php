@@ -29,9 +29,9 @@ class PageController {
             'metaDescription' => 'This is the login-page',
             'metaKeywords' => 'Login, Page',
             'metaAuthor' => 'Fredrik Leemann',
-            'heading' => 'This is the login-page',
             'pageStyleSheetFileNames' => ['login'],
-            'message' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
+            'pageHeading' => 'This is the login-page',
+            'pageMessage' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
         // $_SESSION['isLogedin'] = true;
         Response::render('login', $viewData);
@@ -44,8 +44,8 @@ class PageController {
             'metaDescription' => 'This is the signup-page',
             'metaKeywords' => 'Signup, Page',
             'metaAuthor' => 'Fredrik Leemann',
-            'heading' => 'This is the signup-page',
             'pageStyleSheetFileNames' => ['signup'],
+            'pageHeading' => 'This is the signup-page',
         ];
         //session_destroy();
         Response::render('signup', $viewData);

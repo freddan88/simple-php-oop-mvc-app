@@ -27,6 +27,7 @@ Router::getRoute('/api/hej', ApiController::class, 'hello');
  * POST - Usage: postRoute('urlPath', classController, 'controllerMethod', 'controllerPath' Optional - Root = /controllers)
  */
 
+// session_id($_POST['uuid']);
 // session_start();
 
 // $authorize = new Authorize();

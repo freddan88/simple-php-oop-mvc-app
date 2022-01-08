@@ -33,6 +33,8 @@ class Response {
      */
     public static function json($apiData)
     {
+        $code = empty($apiData['code']) ? 418 : (int)$apiData['code'];
+        http_response_code($code);
         echo json_encode($apiData);
         exit;
     }

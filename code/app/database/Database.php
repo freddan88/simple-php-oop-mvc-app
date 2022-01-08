@@ -4,26 +4,100 @@ declare(strict_types=1);
 
 Trait Database {
     
-    private $pdo;
-    private $sql;
+    private $sql = '';
+    private $action = '';
+    private $fields = [];
+    private $table = '';
     private $statement;
+    private $pdo;
 
-    private function getFieldList($fieldArray, $separator = ', ')
+    private function getSelectFieldList($fields)
     {
-        $fields = [];
-        foreach ($fieldArray as $field) {
-            array_push($fields, "$field = :$field");
+        foreach ($fields as $field) {
+            array_push($this->fields, $field);
         }
-        return implode($separator, $fields);
+        return implode(', ', $this->fields);
     }
 
-    private function getWhereList($fieldArray, $operator, $separator)
+    private function getInsertFieldList($fields)
     {
-        $fields = [];
-        foreach ($fieldArray as $field => $value) {
-            array_push($fields, "$field $operator $value");
+        $values = [];
+        foreach ($fields as $field) {
+            array_push($this->fields, $field);
+            array_push($values, ":$field");
         }
-        return implode($separator, $fields);
+        $query['values'] = implode(', ', $values);
+        $query['fields'] = implode(', ', $this->fields);
+        return $query;
+    }
+
+    private function getUpdateFieldList($fields)
+    {
+        foreach ($fields as $field) {
+            array_push($this->fields, "$field = :$field");
+        }
+        return implode(', ', $this->fields);
+    }
+
+    private function getFieldList($fields)
+    {
+        switch ($this->action) {
+            case 'SELECT':
+                return $this->getSelectFieldList($fields);
+            case 'INSERT':
+                return $this->getInsertFieldList($fields);
+            case 'UPDATE':
+                return $this->getUpdateFieldList($fields);
+        }
+    }
+
+    public function table($tableName)
+    {
+        $this->table = $tableName;
+        $this->fields = [];
+        return $this;
+    }
+
+    public function get($fields)
+    {
+        if (!$this->table) return false;
+        $this->action = 'SELECT';
+        $fieldList = $this->getFieldList($fields);
+        $this->sql = "SELECT $fieldList FROM $this->table";
+        return $this;
+    }
+
+    public function getAll()
+    {
+        if (!$this->table) return false;
+        $this->sql = "SELECT * FROM $this->table";
+        return $this;
+    }
+
+    public function insert($fields)
+    {
+        if (!$this->table) return false;
+        $this->action = 'INSERT';
+        $fieldList = $this->getFieldList($fields)['fields'];
+        $valueList = $this->getFieldList($fields)['values'];
+        $this->sql = "INSERT INTO $this->table ($fieldList) VALUES ($valueList)";
+        return $this;
+    }
+
+    public function update($fields)
+    {
+        if (!$this->table) return false;
+        $this->action = 'UPDATE';
+        $fieldList = $this->getFieldList($fields);
+        $this->sql = "UPDATE $this->table SET $fieldList";
+        return $this;
+    }
+
+    public function append($sql = '')
+    {
+        $sql = empty($sql) ? ';' : " $sql;";
+        $this->sql .= $sql;
+        return $this->sql;
     }
 
     public function sqlite($databaseName = 'sqlite')
@@ -33,49 +107,9 @@ Trait Database {
         return $this;
     }
 
-    public function get($fields)
+    public function prepare($sql)
     {
-        $fieldList = $this->getFieldList($fields);
-        $this->sql = "SELECT $fieldList FROM ";
-        return $this;
-    }
-
-    public function getAll()
-    {
-        $this->sql = 'SELECT * FROM ';
-        return $this;
-    }
-
-    public function update($tableName)
-    {
-        $this->sql = "UPDATE $tableName SET ";
-        return $this;
-    }
-
-    public function table($table)
-    {
-        $this->sql .= "$table ";
-        return $this;
-    }
-
-    public function fields($fields)
-    {
-        $fieldList = $this->getFieldList($fields);
-        $this->sql .= "$fieldList ";
-        return $this;
-    }
-
-    public function where($fields, $operator = '=', $separator = ' AND ')
-    {
-        $fieldList = $this->getWhereList($fields, $operator, $separator);
-        $this->sql .= "WHERE $fieldList";
-        return $this;
-    }
-
-    public function prepare()
-    {
-        $this->sql = trim($this->sql) . ';';
-        $this->statement = $this->pdo->prepare($this->sql);
+        $this->statement = $this->pdo->prepare($sql);
         if (!$this->statement) die(var_dump($this->pdo->errorInfo()));
         return $this;
     }
@@ -100,18 +134,5 @@ Trait Database {
     public function fetchAll($pdoFetchOption = PDO::FETCH_OBJ)
     {
         return $this->statement->fetchAll($pdoFetchOption);
-    }
-
-    public function debug()
-    {
-        echo '<pre>', var_dump($this->statement), '</pre>';
-        exit;
-    }
-
-    public function debugSql()
-    {
-        $this->sql = trim($this->sql) . ';';
-        echo '<pre>', var_dump($this->sql), '</pre>';
-        exit;
     }
 }

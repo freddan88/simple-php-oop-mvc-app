@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-Trait Database {
-    
+class Query {
+
     private $sql = '';
     private $action = '';
     private $fields = [];
     private $table = '';
-    private $statement;
-    private $pdo;
+
+    public function __construct($table)
+    {
+        $this->table = $table;
+    }
 
     private function getSelectFieldList($fields)
     {
@@ -50,14 +53,14 @@ Trait Database {
                 return $this->getUpdateFieldList($fields);
         }
     }
-
-    public function table($tableName)
-    {
-        $this->table = $tableName;
-        $this->fields = [];
-        return $this;
-    }
-
+    /**
+     * Example usage:
+     * $sql = new Query('table');
+     * $sql = $sql->get([fields])->append();
+     * 
+     * @param array $fields
+     * @return this
+     */
     public function get($fields)
     {
         $this->action = 'SELECT';
@@ -65,13 +68,26 @@ Trait Database {
         $this->sql = "SELECT $fieldList FROM $this->table";
         return $this;
     }
-
+    /**
+     * Example usage:
+     * $sql = new Query('table');
+     * $sql = $sql->getAll()->append();
+     * 
+     * @return this
+     */
     public function getAll()
     {
         $this->sql = "SELECT * FROM $this->table";
         return $this;
     }
-
+    /**
+     * Example usage:
+     * $sql = new Query('table');
+     * $sql = $sql->insert([fields])->append();
+     * 
+     * @param array $fields
+     * @return this
+     */
     public function insert($fields)
     {
         $this->action = 'INSERT';
@@ -80,7 +96,14 @@ Trait Database {
         $this->sql = "INSERT INTO $this->table ($fieldList) VALUES ($valueList)";
         return $this;
     }
-
+    /**
+     * Example usage:
+     * $sql = new Query('table');
+     * $sql = $sql->update([fields])->append();
+     * 
+     * @param array $fields
+     * @return this
+     */
     public function update($fields)
     {
         $this->action = 'UPDATE';
@@ -88,69 +111,29 @@ Trait Database {
         $this->sql = "UPDATE $this->table SET $fieldList";
         return $this;
     }
-
+    /**
+     * Example usage:
+     * $sql = new Query('table');
+     * $sql = $sql->delete()->append();
+     * 
+     * @param array $fields
+     * @return this
+     */
     public function delete()
     {
         $this->sql = "DELETE FROM $this->table";
         return $this;
     }
-
+    /**
+     * Returns sql-string
+     *
+     * @param string $sql
+     * @return string
+     */
     public function append($sql = '')
     {
         $sql = empty($sql) ? ';' : " $sql;";
         $this->sql .= $sql;
         return $this->sql;
-    }
-
-    public function sqlite($databaseName = '', $pdoOptions = [])
-    {
-        $databaseName = empty($databaseName) ? 'sqlite' : $databaseName;
-        $dsn = sprintf('sqlite:%s/database_%s.db', __DIR__, $databaseName);
-        try {
-            $this->pdo = new PDO($dsn, null, null, $pdoOptions);
-        } catch (Exception $e) {
-            die(var_dump($e->getMessage()));
-        }
-        return $this;
-    }
-
-    public function prepare($sql)
-    {
-        $statement = $this->pdo->prepare($sql);
-        if (!$this->statement) die(var_dump($this->pdo->errorInfo()));
-        return $statement;
-    }
-
-    public function bind($fieldName, $fieldValue, $pdoBindOption)
-    {
-        $this->statement->bindParam(":$fieldName", $fieldValue, $pdoBindOption);
-        return $this;
-    }
-
-    public function execute()
-    {
-        $this->statement->execute();
-        return $this;
-    }
-
-    public function fetch($pdoFetchOption = PDO::FETCH_OBJ)
-    {
-        $this->cleanup();
-        return $this->statement->fetch($pdoFetchOption);
-    }
-
-    public function fetchAll($pdoFetchOption = PDO::FETCH_OBJ)
-    {
-        $this->cleanup();
-        return $this->statement->fetchAll($pdoFetchOption);
-    }
-
-    public function cleanup()
-    {
-        $this->statement = null;
-        $this->fields = [];
-        $this->action = '';
-        $this->table = '';
-        $this->sql = '';
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . "../../app/database/Database.php");
+require_once(__DIR__ . "../../app/database/helpers/Query.php");
 require_once(__DIR__ . "../../app/utils/Response.php");
 require_once(__DIR__ . "../../app/utils/Errors.php");
 require_once(__DIR__ . "../../models/User.php");
@@ -43,16 +43,31 @@ class ApiController {
         
         if (Errors::fields()) Response::json(Errors::getFields());
 
-        $databaseTable = 'tbl_users';
-        $databaseTableFields = ['name', 'email', 'password', 'admin'];
-        $user = new User($_POST, $databaseTable, $databaseTableFields);
-        $user->create()->save();
+        $table = 'tbl_users';
+        $fields = ['name', 'email', 'password', 'admin'];
+
+        // $sql = new Query($table);
+        // $sql = $sql->insert($fields)->append();
+
+        // $user = new User();
+        // $user->update($sql)
+        // ->add($fields[0], 'Freddan', PDO::PARAM_STR)
+        // ->save();
+
+        $sql = new Query($table);
+        $sql = $sql->getAll()->append();
+
+        $user = new User();
+        $data = $user->getAll($sql);
 
         $jsonData = [
             'code' => 200,
             'success' => true,
             'method' => $_SERVER['REQUEST_METHOD'],
+            'sql' => $sql,
+            'data' => $data,
         ];
+
         Response::json($jsonData);
     } 
 }

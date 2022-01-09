@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . "../../app/utils/Response.php");
-require_once(__DIR__ . "../../models/User.php");
 
 class PageController {
 
@@ -18,7 +17,6 @@ class PageController {
             'pageStyleSheetFileNames' => ['home'],
             'pageHeading' => 'This is the home-page',
         ];
-        $user = new User();
         Response::render('home', $viewData);
     }
 
@@ -33,7 +31,6 @@ class PageController {
             'pageHeading' => 'This is the login-page',
             'pageMessage' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
-        // $_SESSION['isLogedin'] = true;
         Response::render('login', $viewData);
     }
 
@@ -48,7 +45,6 @@ class PageController {
             'pageStyleSheetFileNames' => ['form'],
             'pageHeading' => 'This is the signup-page',
         ];
-        //session_destroy();
         Response::render('signup', $viewData);
     }
 }

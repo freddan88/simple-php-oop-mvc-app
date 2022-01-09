@@ -18,6 +18,5 @@ const submitFormData = (event, apiEndpoint) => {
     .catch((error) => {
       console.error(error);
       handleApiResponse(error);
-      console.error(error.message);
     });
 };

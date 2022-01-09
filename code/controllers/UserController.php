@@ -6,19 +6,19 @@ require_once(__DIR__ . "../../app/utils/Response.php");
 
 class UserController {
 
-    public static function login()
+    public function login()
     {
         if (empty($_POST['username'])) Response::redirect('/login');
         $message = urlencode('User successfully created');
         Response::redirect("/login?message=$message");
     }
 
-    public static function signup()
+    public function signup()
     {
         Response::redirect('/');
     }
 
-    public static function logout()
+    public function logout()
     {
         Response::redirect('/');
     }

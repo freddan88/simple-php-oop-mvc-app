@@ -64,6 +64,7 @@ class Router {
             Response::render('error', ['pageTitle' => '501', 'pageMessage' => 'Not Implemented']);
         }
 
-        $controllerName::$controllerMethod();
+        $controller = new $controllerName();
+        $controller->$controllerMethod();
     }
 }

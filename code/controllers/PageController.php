@@ -6,7 +6,7 @@ require_once(__DIR__ . "../../app/utils/Response.php");
 
 class PageController {
 
-    public static function index()
+    public function index()
     {
         $viewData = [
             'metaTitle' => 'Fredrik | Home',
@@ -20,7 +20,7 @@ class PageController {
         Response::render('home', $viewData);
     }
 
-    public static function login()
+    public function login()
     {        
         $viewData = [
             'metaTitle' => 'Fredrik | Login',
@@ -34,7 +34,7 @@ class PageController {
         Response::render('login', $viewData);
     }
 
-    public static function signup()
+    public function signup()
     {        
         $viewData = [
             'metaTitle' => 'Fredrik | Signup',

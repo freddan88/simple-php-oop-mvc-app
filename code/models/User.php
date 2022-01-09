@@ -2,27 +2,22 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . "../../app/database/helpers/Database.php");
+require_once(__DIR__ . "../../app/database/Database.php");
 
 class User {
     use Database;
 
     private $pdoStatement;
 
-    public function debug()
-    {
-        return $this->sqlite();
-    }
-
     public function add($field, $value, $pdoParam = PDO::PARAM_STR)
     {
-        $this->pdoStatement->bind($field, $value, $pdoParam);
+        $this->bind($field, $value, $pdoParam);
         return $this;
     }
 
     public function save()
     {
-        $this->pdoStatement->execute()->cleanup();
+        $this->execute()->cleanup();
     }
     /**
      * Example usage:
@@ -36,7 +31,7 @@ class User {
      */
     public function create($sql)
     {
-        $this->pdoStatement = $this->sqlite()->prepare($sql);
+        $this->sqlite()->prepare($sql);
         return $this;
     }
     /**
@@ -51,7 +46,7 @@ class User {
      */
     public function update($sql)
     {
-        $this->pdoStatement = $this->sqlite()->prepare($sql);
+        $this->sqlite()->prepare($sql);
         return $this;
     }
     /**
@@ -64,8 +59,7 @@ class User {
      */
     public function delete($sql)
     {
-        $pdoStatement = $this->sqlite()->prepare($sql);
-        $pdoStatement->execute()->cleanup();
+        $this->sqlite()->prepare($sql)->execute()->cleanup();
     }
     /**
      * Example usage:
@@ -77,8 +71,7 @@ class User {
      */
     public function get($sql)
     {
-        $pdoStatement = $this->sqlite()->prepare($sql);
-        return $pdoStatement->execute()->fetch();
+        return $this->sqlite()->prepare($sql)->execute()->fetch();
     }
     /**
      * Example usage:
@@ -90,29 +83,6 @@ class User {
      */
     public function getAll($sql)
     {
-        $pdoStatement = $this->sqlite()->prepare($sql);
-        return $pdoStatement->execute()->fetchAll();
+        return $this->sqlite()->prepare($sql)->execute()->fetchAll();
     }
-
-    // $selectAllSql = $this->table($table)->getAll()->append();
-    // $selectAllData = $this->sqlite()->prepare($selectAllSql)->execute()->fetchAll();
-
-    // $selectSql = $this->table($table)->get(['name'])->append('WHERE id = 2');
-    // $selectData = $this->sqlite()->prepare($selectSql)->execute()->fetch();
-
-
-    // public function save()
-    // {
-    //     $name = 'Fredrik';
-    //     $email = $this->sanitizeString($this->postData['email']);
-    //     $password = $this->sanitizeString($this->postData['password']);
-    //     $admin = 0;
-
-    //     $this->sqlite()->prepare($this->sql)
-    //     ->bind($this->fields[0], $name, PDO::PARAM_STR)
-    //     ->bind($this->fields[1], $email, PDO::PARAM_STR)
-    //     ->bind($this->fields[2], $password, PDO::PARAM_STR)
-    //     ->bind($this->fields[3], $admin, PDO::PARAM_INT)
-    //     ->execute()->cleanup();
-    // }
 }

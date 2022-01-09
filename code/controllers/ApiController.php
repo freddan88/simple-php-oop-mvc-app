@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . "../../app/database/helpers/Query.php");
+require_once(__DIR__ . "../../app/security/Sanitize.php");
+require_once(__DIR__ . "../../app/database/Query.php");
 require_once(__DIR__ . "../../app/utils/Response.php");
 require_once(__DIR__ . "../../app/utils/Errors.php");
 require_once(__DIR__ . "../../models/User.php");
 
 class ApiController {
-    use Database;
 
-    public static function index()
+    public function index()
     {
         $jsonData = [
             'Test' => 'Index',
@@ -19,7 +19,7 @@ class ApiController {
         Response::json($jsonData);
     } 
 
-    public static function hello()
+    public function hello()
     {
         $jsonData = [
             'Test' => 'Hello',
@@ -28,7 +28,7 @@ class ApiController {
         Response::json($jsonData);
     }
 
-    public static function signup()
+    public function signup()
     {
         if (empty($_POST['email'])) Errors::addField('Email is missing', 'email');
         if (empty($_POST['password'])) Errors::addField('Password is missing', 'password');
@@ -43,29 +43,30 @@ class ApiController {
         
         if (Errors::fields()) Response::json(Errors::getFields());
 
+        $sanitize = new Sanitize();
+
         $table = 'tbl_users';
         $fields = ['name', 'email', 'password', 'admin'];
 
-        // $sql = new Query($table);
-        // $sql = $sql->insert($fields)->append();
-
-        // $user = new User();
-        // $user->update($sql)
-        // ->add($fields[0], 'Freddan', PDO::PARAM_STR)
-        // ->save();
-
         $sql = new Query($table);
-        $sql = $sql->getAll()->append();
+        $sql = $sql->insert($fields)->append();
+
+        $name = $sanitize->string($_POST[$fields[0]]);
+        $email = $sanitize->email($_POST[$fields[1]]);
 
         $user = new User();
-        $data = $user->getAll($sql);
+        $user->create($sql)
+        ->add($fields[0], $name, PDO::PARAM_STR)
+        ->add($fields[1], $email, PDO::PARAM_STR)
+        ->add($fields[2], '123123', PDO::PARAM_STR)
+        ->add($fields[3], 1, PDO::PARAM_INT)
+        ->save();
 
         $jsonData = [
             'code' => 200,
             'success' => true,
             'method' => $_SERVER['REQUEST_METHOD'],
             'sql' => $sql,
-            'data' => $data,
         ];
 
         Response::json($jsonData);

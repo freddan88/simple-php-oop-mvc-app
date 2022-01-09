@@ -24,8 +24,7 @@ Trait Database {
     public function sqlite($databaseName = '', $pdoOptions = [])
     {
         $databaseName = empty($databaseName) ? 'sqlite' : $databaseName;
-        $databasePath = __DIR__ . "../../database/database_$databaseName.db";
-        $dsn = "sqlite:$databasePath";
+        $dsn = sprintf('sqlite:%s/_%s.db', __DIR__, $databaseName);
         try {
             $this->pdo = new PDO($dsn, null, null, $pdoOptions);
         } catch (Exception $e) {
@@ -36,10 +35,9 @@ Trait Database {
 
     public function prepare($sql)
     {
-        $statement = $this->pdo->prepare($sql);
+        $this->statement = $this->pdo->prepare($sql);
         if (!$this->statement) die(var_dump($this->pdo->errorInfo()));
-        return $this->pdo->errorInfo();
-        return $statement;
+        return $this;
     }
 
     public function bind($fieldName, $fieldValue, $pdoBindOption)
@@ -56,14 +54,16 @@ Trait Database {
 
     public function fetch($pdoFetchOption = PDO::FETCH_OBJ)
     {
+        $data = $this->statement->fetch($pdoFetchOption);
         $this->cleanup();
-        return $this->statement->fetch($pdoFetchOption);
+        return $data;
     }
 
     public function fetchAll($pdoFetchOption = PDO::FETCH_OBJ)
     {
+        $data = $this->statement->fetchAll($pdoFetchOption);
         $this->cleanup();
-        return $this->statement->fetchAll($pdoFetchOption);
+        return $data;
     }
 
     public function cleanup()

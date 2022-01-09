@@ -3,5 +3,70 @@
 }
 
 body {
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 1200px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
+  padding: 0.5em 0;
+}
+
+.main-header {
+  background-color: #333;
+}
+
+.main-header__navigation {
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-header__navigation a {
+  text-decoration: none;
+  padding: 0.25em;
+  color: #eee;
+}
+
+.main-header__navigation a:hover {
+  text-decoration: none;
+  color: hsl(232, 71%, 60%);
+}
+
+.main-content {
+  background-color: #eee;
+  padding: 0 5px;
+  flex: 1;
+}
+
+.main-footer {
+  background-color: #333;
+  padding: 20px;
+}
+
+.section h1 {
+  text-align: center;
 }

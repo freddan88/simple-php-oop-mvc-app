@@ -20,6 +20,7 @@ Router::postRoute('/logout', UserController::class, 'logout');
 // (api) get-routes
 Router::getRoute('/api', ApiController::class, 'index');
 Router::getRoute('/api/hej', ApiController::class, 'hello');
+Router::postRoute('/api/signup', ApiController::class, 'signup');
 
 /**
  * Supported http-methods and examples:

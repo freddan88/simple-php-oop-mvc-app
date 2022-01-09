@@ -29,7 +29,7 @@ class PageController {
             'metaDescription' => 'This is the login-page',
             'metaKeywords' => 'Login, Page',
             'metaAuthor' => 'Fredrik Leemann',
-            'pageStyleSheetFileNames' => ['login'],
+            'pageStyleSheetFileNames' => ['form'],
             'pageHeading' => 'This is the login-page',
             'pageMessage' => empty($_GET['message']) ? '' : urldecode($_GET['message']),
         ];
@@ -44,7 +44,8 @@ class PageController {
             'metaDescription' => 'This is the signup-page',
             'metaKeywords' => 'Signup, Page',
             'metaAuthor' => 'Fredrik Leemann',
-            'pageStyleSheetFileNames' => ['signup'],
+            'pageJavascriptFileNames' => ['signup'],
+            'pageStyleSheetFileNames' => ['form'],
             'pageHeading' => 'This is the signup-page',
         ];
         //session_destroy();

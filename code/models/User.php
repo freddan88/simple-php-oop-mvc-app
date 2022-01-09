@@ -8,17 +8,17 @@ require_once(__DIR__ . "../../app/security/Sanitize.php");
 class User extends Sanitize {
     use Database;
 
-    public function __construct()
+    private $databaseTableFields = [];
+    private $databaseTable = '';
+    private $postData = [];
+    private $sql = '';
+    private $pdoStatement;
+
+    public function __construct($postData, $databaseTable, $databaseTableFields)
     {
-        $table = 'tbl_users';
-        $fields = ['name', 'email', 'password', 'role'];
-        // $insertSql = $this->table($table)->insert($fields)->append();
-        // $this->sqlite()->prepare($insertSql)
-        // ->bind($fields[0],'Roger', PDO::PARAM_STR)
-        // ->bind($fields[1],'roger@test.se', PDO::PARAM_STR)
-        // ->bind($fields[2],'123', PDO::PARAM_STR)
-        // ->bind($fields[3], 2, PDO::PARAM_INT)
-        // ->execute()->cleanup();
+        $this->postData = $postData;
+        $this->databaseTable = $databaseTable;
+        $this->databaseTableFields = $databaseTableFields;
 
         // $updateSql = $this->table($table)->update(['name'])->append('WHERE id = 1');
         // $this->sqlite()->prepare($updateSql)
@@ -33,17 +33,43 @@ class User extends Sanitize {
 
         // $deleteSql = $this->table($table)->delete()->append('WHERE id = 2');
         // $this->sqlite()->prepare($deleteSql)->execute()->cleanup();
+    }
 
-        // $this->sqlite()->insert()->table('tbl_users')->fields($fields)->debugSql();
-        // $value = $this->sqlite()->get($fields)->table('tbl_users')->prepare()->execute()->fetchAll();
-        // $value = $this->sqlite()->getAll()->table('tbl_users')->prepare()->execute()->fetch();
-        // $this->sqlite()->prepare()
-        // ->bind($fields[0], 'Fredrik Leemann', PDO::PARAM_STR)
-        // ->bind($fields[1], 'fredrik@leemann.se', PDO::PARAM_STR)
-        // ->bind($fields[2], '123', PDO::PARAM_STR)
-        // ->bind($fields[3], '123', PDO::PARAM_INT)
-        // ->execute(); 
-        // $value = empty($value->name) ? '' : $this->sanitizeString($value->name);
-        // die(var_dump($value));
+    public function create()
+    {
+        $this->sql = $this->table($this->databaseTable)->insert($this->databaseTableFields)->append();
+        return $this;
+    }
+
+    public function update($table, $fields, $sql)
+    {
+        $sql = $this->table($table)->insert($fields)->append();
+        $this->pdoStatement = $this->sqlite()->prepare($sql);
+        return $this;
+    }
+
+    public function add($field, $value, $pdoParam = PDO::PARAM_STR)
+    {
+        $this->pdoStatement->bind($field, $value, $pdoParam);
+    }
+
+    public function run()
+    {
+        $this->pdoStatement->execute()->cleanup();
+    }
+
+    public function save()
+    {
+        $name = 'Fredrik';
+        $email = $this->sanitizeString($this->postData['email']);
+        $password = $this->sanitizeString($this->postData['password']);
+        $admin = 0;
+
+        $this->sqlite()->prepare($this->sql)
+        ->bind($this->fields[0], $name, PDO::PARAM_STR)
+        ->bind($this->fields[1], $email, PDO::PARAM_STR)
+        ->bind($this->fields[2], $password, PDO::PARAM_STR)
+        ->bind($this->fields[3], $admin, PDO::PARAM_INT)
+        ->execute()->cleanup();
     }
 }

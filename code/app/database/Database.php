@@ -116,9 +116,9 @@ Trait Database {
 
     public function prepare($sql)
     {
-        $this->statement = $this->pdo->prepare($sql);
+        $statement = $this->pdo->prepare($sql);
         if (!$this->statement) die(var_dump($this->pdo->errorInfo()));
-        return $this;
+        return $statement;
     }
 
     public function bind($fieldName, $fieldValue, $pdoBindOption)
